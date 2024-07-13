@@ -1,4 +1,4 @@
-from paho.mqtt import client as mqtt_client
+import paho.mqtt.client as mqtt
 import time
 import random
 
@@ -12,7 +12,7 @@ broker_address = "test.mosquitto.org"
 topic = "hello_world/broadcast"
 message = "Hello world"
 
-client = mqtt_client.Client(client_id="Broadcast", protocol=mqtt_client.MQTTv5)
+client = mqtt.Client(client_id="Broadcast", protocol=mqtt.MQTTv5)
 client.on_connect = on_connect
 client.on_publish = on_publish
 
