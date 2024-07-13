@@ -8,7 +8,7 @@ def on_connect(client, userdata, flags, rc, properties=None):
 def on_publish(client, userdata, mid, properties=None, reasonCode=None):
     print(f"Message {mid} published")
 
-broker_address = "localhost"
+broker_address = "broker-service"
 broker_port = 1883
 topic = "hello_world/broadcast"
 message = "Hello world"

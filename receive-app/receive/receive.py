@@ -7,7 +7,7 @@ def on_connect(client, userdata, flags, rc, properties=None):
 def on_message(client, userdata, message):
     print("Received message: " + str(message.payload.decode("utf-8")))
 
-broker_address = "localhost"
+broker_address = "broker-service"
 broker_port = 1883
 topic = "hello_world/broadcast"
 
