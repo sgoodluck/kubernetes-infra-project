@@ -8,7 +8,8 @@ def on_connect(client, userdata, flags, rc, properties=None):
 def on_publish(client, userdata, mid, properties=None):
     print(f"Message {mid} published")
 
-broker_address = "test.mosquitto.org"
+broker_address = "localhost"
+broker_port = 1883
 topic = "hello_world/broadcast"
 message = "Hello world"
 
@@ -16,7 +17,7 @@ client = mqtt.Client(client_id="Broadcast", protocol=mqtt.MQTTv5)
 client.on_connect = on_connect
 client.on_publish = on_publish
 
-client.connect(broker_address)
+client.connect(broker_address, broker_port)
 client.loop_start()
 
 while True:
