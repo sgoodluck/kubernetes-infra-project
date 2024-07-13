@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receive-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: receive-app
+  template:
+    metadata:
+      labels:
+        app: receive-app
+    spec:
+      containers:
+        - name: receive-app
+          image: receive-app:latest
+          ports:
+            - containerPort: 80

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcast-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broadcast-app
+  template:
+    metadata:
+      labels:
+        app: broadcast-app
+    spec:
+      containers:
+      - name: broadcast-app
+        image: broadcast-app:latest
+        ports:
+        - containerPort: 80
