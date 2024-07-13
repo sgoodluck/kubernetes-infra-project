@@ -22,7 +22,7 @@ try:
     client.loop_forever()
 
 except KeyboardInterrupt:
-    print("Stopping the client...")
+    print("Stopping the receiver...")
 
 finally:
     client.disconnect()

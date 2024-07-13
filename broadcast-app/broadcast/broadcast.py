@@ -5,7 +5,7 @@ import random
 def on_connect(client, userdata, flags, rc, properties=None):
     print(f"Connected with result code {rc}")
 
-def on_publish(client, userdata, mid, properties=None):
+def on_publish(client, userdata, mid, properties=None, reasonCode=None):
     print(f"Message {mid} published")
 
 broker_address = "localhost"
@@ -29,7 +29,7 @@ try:
         result.wait_for_publish()
 
 except KeyboardInterrupt:
-    print("Stopping the client...")
+    print("Stopping the broadcast...")
 
 finally:
     client.loop_stop()
