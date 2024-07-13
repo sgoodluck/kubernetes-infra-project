@@ -1,7 +1,39 @@
-# Seth Martin 
+# Seth Martin | machina-infrastructure-hw
 
+I have tried to update this README progressively so you can also see my thoughts as I was going.
 
-## Initial Thoughts
+## Running via minikube
+
+TODO...
+
+## Running Locally
+
+To run this locally (without docker or minikube) you can do the following:
+
+0. Ensure that you have [poetry](https://python-poetry.org/docs/) and [mosquitto](https://mosquitto.org/) installed on your machine
+
+1. Open a terminal and start mosquitto in verbose mode: `mosquitto -v`
+
+2. Open a second terminal and cd into the broadcast app to install dependencies and run the broadcast program:
+
+    `cd broadcast-app && poetry install && poetry run python broadcast/broadcast.py`
+    
+    
+3. Open a third terminal and cd into the receive app to isntall dependencies and run the receive program:
+
+    `cd receive-app && poetry install && poetry run python receive/receive.py`
+
+Congratulations -- you should be able to see the program functioning as expected locally! 
+
+# Thought Stream 
+
+## 1. Local MQTT is done -- onto minikube
+
+Alright, we have the local project directories setup and can successfully run the `broadcast` and `receive` apps locally through mosquitto. Next step will be dockerizing and setting up for one stop execution via minikube. 
+
+I'll save the webapp portion of things for last.
+
+## 0. Initial Thoughts
 
 Sounds like a fun project. I'll be making use of the following technologies: 
 

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "receive-app"
+version = "0.1.0"
+description = "The receiving client for mqtt"
+authors = ["Seth <sthmrtn@pm.me>"]
+readme = "README.md"
+packages = [{include = "receive"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+paho-mqtt = "^2.1.0"
+Flask = "^3.0.3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
