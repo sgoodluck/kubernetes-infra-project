@@ -1,15 +1,28 @@
 import paho.mqtt.client as mqtt
 
-broker_address = "localhost"
-broker_port = 1883
-topic = "hello_world/broadcast"
+def on_connect(client, userdata, flags, rc, properties=None):
+    print(f"Connected with result code {rc}")
+    client.subscribe(topic)
 
 def on_message(client, userdata, message):
     print("Received message: " + str(message.payload.decode("utf-8")))
 
-client = mqtt.Client(client_id="Receive", protocol=mqtt.MQTTv5)
-client.connect(broker_address, broker_port)
-client.subscribe(topic)
-client.on_message = on_message
+broker_address = "localhost"
+broker_port = 1883
+topic = "hello_world/broadcast"
 
-client.loop_forever()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+client.on_connect = on_connect
+client.on_message = on_message
+client.protocol_version = mqtt.MQTTv5
+
+client.connect(broker_address, broker_port)
+
+try:
+    client.loop_forever()
+
+except KeyboardInterrupt:
+    print("Stopping the client...")
+
+finally:
+    client.disconnect()
