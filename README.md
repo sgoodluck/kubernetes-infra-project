@@ -1,3 +1,25 @@
+# Seth Martin 
+
+
+## Initial Thoughts
+
+Sounds like a fun project. I'll be making use of the following technologies: 
+
+- `Python` (enjoyable, well-known language)
+
+- `Poetry` package manager (easy and clean)
+
+- `Ruff` code formatter (fast code formatting)
+
+- `MQTT` via Mosquito (machine-to-machine protocol to facilitate broadcasting and reception)
+
+- `Minikube` as that is requrested 
+
+The approach I will take will be to setup `mqtt` as it is the gold standard for machine-to-machine communication and I'm guessing it or a similar service is in use at Machina. 
+I'll have a broker as one service, a broadcasting client as another, and potentially one more as a subscriber that feeds into a simple webapp. 
+
+There are some fun flourishes I could put in (like broadcasting hello world with a random color and displaiyng that) but we will save those for the end if there is time. 
+
 # infrastructure-hw
 
 ## Your mission
