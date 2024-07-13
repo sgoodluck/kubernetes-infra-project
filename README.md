@@ -27,7 +27,11 @@ Congratulations -- you should be able to see the program functioning as expected
 
 <img width="1462" alt="Capture d’écran 2024-07-13 à 15 22 21" src="https://github.com/user-attachments/assets/fb3acca3-96f1-4742-88c5-7e48f9ab4281">
 
-# Thought Stream 
+# Thought Stream
+
+## 1.5 Fixed some issues
+
+Fixed some issues with how I setup MQTT. Need to take a lunch break. Back soon
 
 ## 1. Local MQTT is done -- onto minikube
 
