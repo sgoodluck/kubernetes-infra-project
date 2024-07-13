@@ -31,7 +31,11 @@ Congratulations -- you should be able to see the program functioning as expected
 
 ## 1.5 Fixed some issues
 
-Fixed some issues with how I setup MQTT. Need to take a lunch break. Back soon
+Fixed some issues with how I setup MQTT. Need to take a lunch break -- been working for about 90~120 minutes?. 
+
+I accidentally made a PR against your base branch. In the future, I would recommend that the instructions have us clone the repository to avoid accidentally PR'ing into the upstream fork! 
+
+Back soon
 
 ## 1. Local MQTT is done -- onto minikube
 
