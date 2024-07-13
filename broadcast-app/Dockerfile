@@ -1,5 +1,13 @@
-# Use python 3.12
-FROM python:3.12
+# Use python 3.12 slim
+FROM python:3.12-slim
+
+# Install additional build dependencies
+RUN apt-get update && \
+    apt-get install -y gcc libffi-dev && \
+    apt-get clean
+
+# Install poetry
+RUN pip install poetry
 
 # Set working directory
 WORKDIR /app
@@ -7,17 +15,14 @@ WORKDIR /app
 # Copy poetry config files
 COPY pyproject.toml poetry.lock* /app/
 
-# Install poetry
-RUN pip install poetry
-
-# Disable poetry virtualenv creation since it is redundant
+# Disable poetry virtualenv creation
 RUN poetry config virtualenvs.create false
 
 # Install dependencies
-RUN poetry install --no-dev
+RUN poetry install --without dev
 
-# Copy the entire broadcast code
-COPY broadcast/ /app/broadcast/
+# Copy the broadcast code
+COPY broadcast /app/broadcast/
 
-# Run the broadcast application
+# Set the entry point to run the application
 CMD ["python", "broadcast/broadcast.py"]
