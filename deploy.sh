@@ -11,6 +11,9 @@ check_image() {
   fi
 }
 
+# Delete existing deployments if they exist
+kubectl delete deployment broker-app receive-app broadcast-app
+
 # Check images before deploying
 check_image "broadcast-app:latest"
 check_image "broker-app:latest"
