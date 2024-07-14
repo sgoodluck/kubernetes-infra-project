@@ -15,5 +15,6 @@ spec:
       containers:
         - name: receive-app
           image: receive-app:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 80
