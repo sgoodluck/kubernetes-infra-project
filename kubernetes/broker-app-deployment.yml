@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broker-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: broker-app
+  template:
+    metadata:
+      labels:
+        app: broker-app
+    spec:
+      containers:
+      - name: broker-app
+        image: broker-app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 1883
+        - containerPort: 9001 

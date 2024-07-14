@@ -1,14 +1,17 @@
 import paho.mqtt.client as mqtt
 import time
 import random
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 def on_connect(client, userdata, flags, rc, properties=None):
-    print(f"Connected with result code {rc}")
+    logging.info(f"Connected with result code {rc}")
 
 def on_publish(client, userdata, mid, properties=None, reasonCode=None):
-    print(f"Message {mid} published")
+    logging.info(f"Message {mid} published")
 
-broker_address = "localhost"
+broker_address = "broker-app"
 broker_port = 1883
 topic = "hello_world/broadcast"
 message = "Hello world"
@@ -18,19 +21,22 @@ client.on_connect = on_connect
 client.on_publish = on_publish
 client.protocol_version = mqtt.MQTTv5
 
-client.connect(broker_address, broker_port)
-client.loop_start()
-
 try:
+    client.connect(broker_address, broker_port)
+    logging.info("Connected to MQTT broker")
+    client.loop_start()
+
     while True:
         wait_time = random.uniform(1, 10)
         time.sleep(wait_time)
         result = client.publish(topic, message)
         result.wait_for_publish()
+        logging.info(f"Published {message} to topic {topic}")
 
-except KeyboardInterrupt:
-    print("Stopping the broadcast...")
+except Exception as e:
+    logging.error(f"Failed to connect or publish message: {e}")
 
 finally:
     client.loop_stop()
     client.disconnect()
+    logging.info("Disconnected from MQTT broker")
