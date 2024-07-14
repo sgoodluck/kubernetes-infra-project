@@ -24,5 +24,7 @@ RUN poetry install --without dev
 # Copy the receive code
 COPY receive/ /app/receive/
 
+EXPOSE 80
+
 # Run the receive application
 CMD ["python", "receive/receive.py"]

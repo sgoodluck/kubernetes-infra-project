@@ -29,3 +29,4 @@ kubectl rollout status deployment/broker-app
 # Deploy broadcast-app and receive-app
 kubectl apply -f kubernetes/broadcast-app-deployment.yml
 kubectl apply -f kubernetes/receive-app-deployment.yml
+kubectl apply -f kubernetes/receive-app-service.yml
