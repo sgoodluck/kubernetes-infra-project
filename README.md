@@ -61,7 +61,7 @@ Overall, I enjoyed this assignment. It was a good balance of tightly scoped, ent
 
 ### Note on Git History
 
-Normally, I squash my commits when merging. I forgot to do that early on and kept the same pattern.
+Normally, I squash my commits when merging. I forgot to do that early on and kept the same pattern as I figured it would let you see the order I took if you were bored.
 
 ### What is missing
 
