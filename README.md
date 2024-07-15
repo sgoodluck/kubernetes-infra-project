@@ -30,8 +30,7 @@ Alternatively simply run `./build-images.sh && ./deploy.sh` in one line
 
 Open a browser and navigage to: [http://localhost:5000](http://localhost:5000)
 
-You should now be able to observe real time messages on the browser including a client-side calculated time difference between message receipts. 
-
+You should now be able to observe real time messages on the browser including a client-side calculated time difference between message receipts (you may need to refresh the browser).
 To exit from the terminal where you are forwarding ports, simply hit `Enter`
 
 ### Project Organization 
