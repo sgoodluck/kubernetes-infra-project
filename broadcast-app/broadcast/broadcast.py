@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define mqtt constants
-BROKeR_ADDRESS = "broker-app"
+BROKER_ADDRESS = "broker-app"
 BROKER_PORT = 1883
 TOPIC = "hello_world/broadcast"
 MESSAGE = "Hello world"
