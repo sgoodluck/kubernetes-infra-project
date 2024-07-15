@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# Set some globals
+GREEN='\033[0;32m'
+CLEAR='\033[0m'
+PORT_FORWARD_PID=""
 
-# helper to check if the image exists
+# Function to check if the image exists
 check_image() {
   image_name=$1
   if minikube ssh "docker image inspect $image_name" &> /dev/null; then
@@ -12,15 +16,31 @@ check_image() {
   fi
 }
 
-# Set some colors
-GREEN='\033[0;32m'
-CLEAR='\033[0m'
+# Function to start port forwarding
+start_port_forwarding() {
+  # Start port forwarding in the background and redirect output to null
+  echo -e "\nStarting port-forwarding..."
+  kubectl port-forward service/receive-app-service 5000:80 > /dev/null 2>&1 &
+  # Store the process ID of the port forwarding
+  PORT_FORWARD_PID=$!
+  echo "Port forwarding process ID: $PORT_FORWARD_PID"
+}
 
-# Let everyone know
+# Function to stop port forwarding
+stop_port_forwarding() {
+  if [ -n "$PORT_FORWARD_PID" ]; then
+    echo "Stopping port forwarding process..."
+    kill $PORT_FORWARD_PID
+    wait $PORT_FORWARD_PID 2>/dev/null
+    echo "Port forwarding process stopped."
+  fi
+}
+
+# Let everyone know we are starting
 echo -e "\n${GREEN}Starting Deployment Process...${CLEAR}\n"
 
 # Delete existing deployments if they exist
-kubectl delete deployment broker-app receive-app broadcast-app
+kubectl delete deployment broker-app receive-app broadcast-app --ignore-not-found=true
 
 # Check images before deploying
 check_image "broadcast-app:latest"
@@ -42,18 +62,17 @@ kubectl apply -f kubernetes/receive-app-service.yml
 # Wait for receive-app deployment
 kubectl rollout status deployment/receive-app
 
-# Start port forwarding in the background and redirect output to null
-echo -e "\nStarting port-forwarding..."
-kubectl port-forward service/receive-app-service 5000:80 > /dev/null 2>&1 &
+# Start port forwarding
+start_port_forwarding
 
 # Print out url
 echo -e "\n${GREEN}Flask app is accessible at: http://localhost:5000\n${CLEAR}"
 
-# Await user input to kill process
+# Await user input to stop port forwarding
 read -p $'Press Enter to stop port forwarding and exit...'
 
-# Kill the port forwarding process
-pkill -f "kubectl port-forward"
+# Stop port forwarding
+stop_port_forwarding
 
 # Bye Now
 echo -e "\n${GREEN}Exiting!${CLEAR}"
