@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import logging
 from flask import Flask, render_template
 
-# Init Logging
+# Init logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Init flask app and array to store messages
@@ -21,27 +21,26 @@ def on_connect(client, userdata, flags, rc, properties=None):
 
 def on_message(client, userdata, message):
     logging.info("Received message: " + str(message.payload.decode("utf-8")))
-    # Append received message to global list
     received_messages.append(str(message.payload.decode("utf-8")))
 
 
-# Configure MQTT and Connect
+# Configure mqtt
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
 client.protocol_version = mqtt.MQTTv5
 
-client.connect(BROKER_ADDRESS, BROKER_PORT)
 
 try:
+    client.connect(BROKER_ADDRESS, BROKER_PORT)
     client.loop_start()
 
-    # Render index.html
+    # Render index.html at root
     @app.route('/')
     def index():
         return render_template('index.html', messages=received_messages)
 
-    # Run flask app
+    # Run flask app on localhost
     if __name__ == '__main__':
         app.run(host='0.0.0.0', port=5000)
 
@@ -54,3 +53,4 @@ except Exception as e:
 finally:
     client.loop_stop() 
     client.disconnect()
+    logging.info("Disconnected from MQTT broker")

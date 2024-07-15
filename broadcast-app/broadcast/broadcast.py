@@ -26,15 +26,18 @@ client.on_publish = on_publish
 client.protocol_version = mqtt.MQTTv5
 
 try:
-    client.connect(broker_address, broker_port)
+    client.connect(BROKER_ADDRESS, BROKER_PORT)
     client.loop_start()
 
     while True:
         wait_time = random.uniform(1, 10)
         time.sleep(wait_time)
-        result = client.publish(topic, message)
+        result = client.publish(TOPIC, MESSAGE)
         result.wait_for_publish()
-        logging.info(f"Published {message} to topic {topic}")
+        logging.info(f"Published {MESSAGE} to topic {TOPIC}")
+
+except KeyboardInterrupt:
+    logging.info("Stopping the broadcaster...")
 
 except Exception as e:
     logging.error(f"Failed to connect or publish message: {e}")
