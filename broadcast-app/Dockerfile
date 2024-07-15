@@ -24,5 +24,8 @@ RUN poetry install --without dev
 # Copy the broadcast code
 COPY broadcast /app/broadcast/
 
+# Expose port 80
+EXPOSE 80
+
 # Set the entry point to run the application
 CMD ["python", "broadcast/broadcast.py"]
