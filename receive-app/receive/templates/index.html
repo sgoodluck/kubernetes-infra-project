@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Received Messages</title>
+    <title>Receive App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
     <h1>Received Messages</h1>
-    <ul>
+    <ul id="messages">
         {% for message in messages %}
-        <li>{{ message }}</li>
+            <li>{{ message }}</li>
         {% endfor %}
     </ul>
 </body>

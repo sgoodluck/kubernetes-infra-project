@@ -10,6 +10,8 @@ packages = [{include = "receive"}]
 python = "^3.12"
 paho-mqtt = "^2.1.0"
 Flask = "^3.0.3"
+flask-socketio = "^5.3.6"
+flask-cors = "^4.0.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.1"
