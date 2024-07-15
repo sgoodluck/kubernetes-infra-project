@@ -59,6 +59,10 @@ I believe the chosen technologies were good ones and make for a good representat
 
 Overall, I enjoyed this assignment. It was a good balance of tightly scoped, entertainingly challenging, and relatively unconstrained in terms of how I could approach the problem.
 
+### Note on Git History
+
+Normally, I squash my commits when merging. I forgot to do that early on and kept the same pattern.
+
 ### What is missing
 
 While this is complete from an initial requirements standard, there are a number of changes that we could make to improve things. I did not pursue these because (A) I'm nearly at the 4-hr limit and (B) the added complexity did not seem necessary given the original ask
