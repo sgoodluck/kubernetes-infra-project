@@ -1,7 +1,7 @@
 # Use python 3.12 slim
 FROM python:3.12-slim
 
-# Install additional build dependencies
+# Install build dependencies
 RUN apt-get update && \
     apt-get install -y gcc libffi-dev && \
     apt-get clean
@@ -24,7 +24,8 @@ RUN poetry install --without dev
 # Copy the receive code
 COPY receive/ /app/receive/
 
-EXPOSE 80
+# Expose port 5000
+EXPOSE 5000
 
 # Run the receive application
 CMD ["python", "receive/receive.py"]

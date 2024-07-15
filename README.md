@@ -1,49 +1,90 @@
 # Seth Martin | machina-infrastructure-hw
 
-I have tried to update this README progressively so you can also see my thoughts as I was going.
+This repository completes the desired infrastructure assignment using `mqtt` to facilitate messages between a `broadcast-app` and a `receive-app` in the context of a minikube kubernetes environment. 
 
-## Running via minikube
+### Running via minikube
 
-TODO...
+This repository contains two convenience scripts (`deploy.sh` and `build-images.sh`) for building and deploying the MQTT application. It is recommended to use them for simplicity.
 
-## Running Locally
+_As with all shell scripts, feel free to inspect them before executing!_ 
 
-To run this locally (without docker or minikube) you can do the following:
+#### Pre-Requisites
 
-0. Ensure that you have [poetry](https://python-poetry.org/docs/) and [mosquitto](https://mosquitto.org/) installed on your machine
+- Ensure that you have minikube installed and running 
 
-1. Open a terminal and start mosquitto in verbose mode: `mosquitto -v`
+  `minikube start`
 
-2. Open a second terminal and cd into the broadcast app to install dependencies and run the broadcast program:
+- Make the convenience scripts located at the root of this project executable:
 
-    `cd broadcast-app && poetry install && poetry run python broadcast/broadcast.py`
-    
-    
-3. Open a third terminal and cd into the receive app to isntall dependencies and run the receive program:
+  `chmod +x deploy.sh`
+  
+  `chmod +x build-images.sh`
 
-    `cd receive-app && poetry install && poetry run python receive/receive.py`
+#### Running the program
 
-Congratulations -- you should be able to see the program functioning as expected locally! 
+1. Build the images: `./build-images.sh`
 
-<img width="1462" alt="Capture d’écran 2024-07-13 à 15 22 21" src="https://github.com/user-attachments/assets/fb3acca3-96f1-4742-88c5-7e48f9ab4281">
+2. Deploy to minikube and port forward: `./deploy.sh`
 
-# Thought Stream
+Alternatively simply run `./build-images.sh && ./deploy.sh` in one line
 
-## 1.5 Fixed some issues
+Open a browser and navigage to: [http://localhost:5000](http://localhost:5000)
 
-Fixed some issues with how I setup MQTT. Need to take a lunch break -- been working for about 90~120 minutes?. 
+You should now be able to observe real time messages on the browser including a client-side calculated time difference between message receipts. 
 
-I accidentally made a PR against your base branch. In the future, I would recommend that the instructions have us clone the repository to avoid accidentally PR'ing into the upstream fork! 
+To exit from the terminal where you are forwarding ports, simply hit `Enter`
 
-Back soon
+### Project Organization 
 
-## 1. Local MQTT is done -- onto minikube
+The project makes use of MQTT to facilitate messages between a `receive-app` and `broadcast-app` through a Mosquitto broker (`broker-app`). The intention with this setup was to represent a real-world scenario where there may be many instances of `broadcast-app` (each representing a machine, for example).
 
-Alright, we have the local project directories setup and can successfully run the `broadcast` and `receive` apps locally through mosquitto. Next step will be dockerizing and setting up for one stop execution via minikube. 
+Each application contains its own `Dockerfile` as they are intended to be deployed via Kubernetes (minikube) as standalone services that can be scaled as needed.
 
-I'll save the webapp portion of things for last.
+#### Project Directories 
 
-## 0. Initial Thoughts
+`broadcast-app`: A standalone python application that sends messages via mqtt 
+
+`receive-app`: A standalone flask application that subscribes to messages via mqtt and displays them in a browser 
+
+`broker-app`: Simple dockerized mosquitto image to facilitate messaging 
+
+`kubernetes`: Kubernetes deployment and service configuration files 
+
+
+## Final Thoughts
+
+I ran right up to about 4 hours of total time on this project over the weekend but had a pretty fun time putting this together and learning more about working with kubernetes. 
+
+I believe the chosen technologies were good ones and make for a good representation of doing this in a real world context. I would not change too much on my approach save for the parts I didn't get together.
+
+Overall, I enjoyed this assignment. It was a good balance of tightly scoped, entertainingly challenging, and relatively unconstrained in terms of how I could approach the problem.
+
+### What is missing
+
+While this is complete from an initial requirements standard, there are a number of changes that we could make to improve things. I did not pursue these because (A) I'm nearly at the 4-hr limit and (B) the added complexity did not seem necessary given the original ask
+
+- **Security** 
+
+This is a simple illustrative example. In the real world, we would want to configure certificates and SSL to ensure that data is encryped and that only intended recepients can subscribe to messages. 
+
+- **Better webapp UI**
+
+The UI is obviously simplistic -- we don't have even have a CSS file! In the real world, we may want some niceties for filtering data or potentially even sending messages the other way.
+
+- **A production server**
+
+We are using Flask in a development manner. In the real world, we would probably want to use uvicorn or some other setup
+
+- **Persistent data**
+
+Right now, as soon as you refresh the browser we lose time deltas on messages since these are being calcuated on the client. We could move this to the server or store messages in a more persistent way 
+
+- **Use of environment variables**
+
+Things like "BROKER_ADDRESS" are hardcoded in the scripts. In the real world, it would make sense to probably pull these kinds of things out into an environment file.
+
+
+## Initial Thoughts
 
 Sounds like a fun project. I'll be making use of the following technologies: 
 

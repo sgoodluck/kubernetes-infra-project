@@ -1,7 +1,7 @@
 # Use python 3.12 slim
 FROM python:3.12-slim
 
-# Install additional build dependencies
+# Install build dependencies
 RUN apt-get update && \
     apt-get install -y gcc libffi-dev && \
     apt-get clean
@@ -23,6 +23,9 @@ RUN poetry install --without dev
 
 # Copy the broadcast code
 COPY broadcast /app/broadcast/
+
+# Expose port 80
+EXPOSE 80
 
 # Set the entry point to run the application
 CMD ["python", "broadcast/broadcast.py"]
