@@ -16,6 +16,22 @@ check_image() {
   fi
 }
 
+# Function to wait for termination of a resource
+wait_for_termination() {
+  resource_type=$1
+  resource_name=$2
+
+  echo "Waiting for $resource_type/$resource_name to terminate..."
+
+  # Loop until the resource is terminated
+  while kubectl get $resource_type $resource_name &> /dev/null; do
+    echo "$resource_type/$resource_name is still terminating..."
+    sleep 5
+  done
+
+  echo "$resource_type/$resource_name has terminated."
+}
+
 # Function to start port forwarding
 start_port_forwarding() {
   # Start port forwarding in the background and redirect output to null
@@ -42,6 +58,11 @@ echo -e "\n${GREEN}Starting Deployment Process...${CLEAR}\n"
 # Delete existing deployments if they exist
 kubectl delete deployment broker-app receive-app broadcast-app --ignore-not-found=true
 
+# Wait for termination of deployments
+wait_for_termination deployment broadcast-app
+wait_for_termination deployment receive-app
+wait_for_termination deployment broker-app
+
 # Check images before deploying
 check_image "broadcast-app:latest"
 check_image "broker-app:latest"
@@ -61,6 +82,14 @@ kubectl apply -f kubernetes/receive-app-service.yml
 
 # Wait for receive-app deployment
 kubectl rollout status deployment/receive-app
+
+echo -e "\n${GREEN}Deployment complete!${CLEAR}"
+
+echo -e "\nCurrent pods:"
+kubectl get pods
+
+echo -e "\nCurrent services:"
+kubectl get services
 
 # Start port forwarding
 start_port_forwarding
