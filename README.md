@@ -1,4 +1,4 @@
-# Seth Martin | machina-infrastructure-hw
+# Seth Martin | kubernetes-infrastructure-project
 
 This repository completes the desired infrastructure assignment using `mqtt` to facilitate messages between a `broadcast-app` and a `receive-app` in the context of a minikube kubernetes environment. 
 
